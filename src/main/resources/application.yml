@@ -1,0 +1,16 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8082
+# 应用名称
+spring:
+  application: name=from-zero-to-expert
+  # 数据库驱动：
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/debate_redis?serverTimezone=GMT%2B8
+    username: root
+    password: "0612"
+#自定义属性 读取值
+project:
+    nickname: "JJLin's project, from-zero-to-expert"
+
