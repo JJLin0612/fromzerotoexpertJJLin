@@ -1,7 +1,6 @@
 package com.example.fromzerotoexpert.controller;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +38,7 @@ public class IndexController {
     ) throws IOException {
         Cookie[] cookies = request.getCookies();
         //请求携带cookie
-        if(cookies.length != 0 || cookies != null) {
+        if(cookies != null) {
             for(Cookie cookie : cookies) {
                 if(!cookie.getName().equals(cookieName)) continue;
                 //请求带cookie且cookie信息正确 重定向到再次登录index页
