@@ -24,7 +24,7 @@ public class RegisterLoginController {
      * @param mobile 手机号码
      * @param pwd 密码
      * @param verifyCode 验证码
-     * @return 重定向至登录页面
+     * @return 重定向至 登录页面
      */
     @PostMapping
     public String doRegister(
