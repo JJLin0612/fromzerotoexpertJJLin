@@ -14,7 +14,16 @@ spring:
     url: jdbc:mysql://localhost:3306/myproject?serverTimezone=GMT%2B8
     username: "root"
     password: "0612"
+  # Redis 连接参数配置
+  redis:
+    host: 192.168.217.146
+    port: 6379
+    jedis:
+      pool:
+        max-wait: 100ms
+    timeout: 100
 #自定义属性 读取值
+
 project:
     nickname: "JJLin's project, from-zero-to-expert"
     index:
@@ -27,6 +36,8 @@ project:
 swagger:
   enable: true
 
-#RSA 的密钥长度
-#RSA:
-#  modules: 512
+# 阿里云
+aliyun:
+  RAM:
+    keyid: LTAI5tS6M9xJYnQmKz2rWA2g
+    keysecret: vqCsBvzVxQtyLI8p3qyH8zQC9GjjV3

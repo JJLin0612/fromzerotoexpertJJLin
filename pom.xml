@@ -41,22 +41,23 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
-        <!--RSA加密-->
-<!--        <dependency>
-            <groupId>de.caluga</groupId>
-            <artifactId>rsa</artifactId>
-            <version>1.1</version>
-        </dependency>-->
-        <!--swagger-->
+
+        <!--redis-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--aliyun 短信服务-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <version>2.0.23</version>
+        </dependency>
+        <!--fastjson 转json格式-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.62</version>
         </dependency>
 
         <dependency>
