@@ -37,7 +37,7 @@ project:
 swagger:
   enable: true
 
-# 阿里云
+#  阿里云
 aliyun:
   RAM:
     keyid: ${ACCESS_KEYID}
