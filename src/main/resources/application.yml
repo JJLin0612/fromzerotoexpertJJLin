@@ -1,6 +1,6 @@
 # 应用服务 WEB 访问端口
 server:
-  port: ${SERVER_PORT:8082}
+  port: 8082
 # 应用名称
 spring:
   application:
@@ -13,12 +13,12 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/myproject?serverTimezone=GMT%2B8
-    username: ${DB_USERNAME}
-    password: ${DB_PWD}
+    username: "root"
+    password: "0612"
   # Redis 连接参数配置
   redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
+    host: 192.168.217.146
+    port: 6379
     jedis:
       pool:
         max-wait: 100ms
@@ -40,9 +40,9 @@ swagger:
 # 阿里云
 aliyun:
   RAM:
-    keyid: ${ACCESS_KEYID}
-    keysecret: ${ACCESS_KEYSECRET}
-  endpoint: ${MSM_ENDPOINT}
-  signname: ${MSM_SIGNNAME}
-  templatecode: ${MSM_TEMPLATECODE}
-  phonenumbers: ${MSM_PHONENUMBERS}
+    keyid: "LTAI5tS6M9xJYnQmKz2rWA2g"
+    keysecret: "vqCsBvzVxQtyLI8p3qyH8zQC9GjjV3"
+  endpoint: "dysmsapi.aliyuncs.com"
+  signname: "在线个人项目"
+  templatecode: "SMS_262435388"
+  phonenumbers: "13669544812"
