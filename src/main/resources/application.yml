@@ -46,3 +46,8 @@ aliyun:
   signname: "在线个人项目"
   templatecode: "SMS_262435388"
   phonenumbers: "13669544812"
+
+# 敏感词词库文件路径指定
+sensitiveWordFilter:
+  sensitiveWords:
+    filePath:
