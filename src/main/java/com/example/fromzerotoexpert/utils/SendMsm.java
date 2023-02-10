@@ -38,9 +38,9 @@ public class SendMsm {
 
     /**
      * 调用阿里云短信服务接口发送Code
-     * @param code 需要发送给验证码
+     * @param code 需要发送的验证码
      */
-    public static void sendMessageCode(String code) {
+    public static void sendMessageCode(String mobile, String code) {
 
         Map<String, String> map = new HashMap<>(1);
         map.put("code", code);
@@ -49,7 +49,7 @@ public class SendMsm {
             SendSmsRequest sendSmsRequest = new SendSmsRequest()
                     .setSignName(Constants.MSM_signName)
                     .setTemplateCode(Constants.MSM_templateCode)
-                    .setPhoneNumbers(Constants.MSM_phoneNumbers)
+                    .setPhoneNumbers(mobile)
                     .setTemplateParam(JSONObject.toJSONString(map));
             //发送验证码 复制代码运行请自行打印 API 的返回值
             client.sendSms(sendSmsRequest);

@@ -37,10 +37,10 @@ public class Swagger2Config {
 
     private ApiInfo webApiInfo(){
         return new ApiInfoBuilder()
-                .title("0-1项目-后端Swagger2接口文档")
-                .description("本文档描述了0-1项目的后端接口定义")
+                .title("从0到1项目-后端Swagger2接口文档")
+                .description("本文档描述项目的后端接口定义")
                 .version("1.0")
-                .contact(new Contact("RabbitFaFa", "http://localhost", "1943360791@qq.com"))
+                .contact(new Contact("RabbitFaFa", "", ""))
                 .build();
     }
 }

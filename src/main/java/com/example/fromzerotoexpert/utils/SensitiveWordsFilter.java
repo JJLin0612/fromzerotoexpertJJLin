@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +19,14 @@ import java.util.Map;
 public class SensitiveWordsFilter {
 
     @Value("${sensitiveWordFilter.sensitiveWords.filePath}")
-    private static String sensitiveWordsFilePath;
+    private static String sensitiveWordsFilePath = "D:\\Program Files (x86)\\Java_code_IDEA\\from-zero-to-expert\\src\\main\\resources\\sensitiveWords\\sensitiveWords.txt";
 
     //前缀树 root 结点
-    private static TreeNode root = new TreeNode();
+    private static final TreeNode root = new TreeNode();
+
+    public SensitiveWordsFilter() throws IOException {
+        initializeTrieTree();
+    }
 
     //前缀树结点定义
     static class TreeNode {
@@ -59,7 +62,7 @@ public class SensitiveWordsFilter {
         FileInputStream fis = new FileInputStream(file);
 
         byte[] buff = new byte[1024];
-        int readLen = 0;
+        int readLen;
         StringBuilder word = new StringBuilder();
 
         while ((readLen = fis.read(buff)) != -1) {
