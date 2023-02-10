@@ -3,6 +3,7 @@ package com.example.fromzerotoexpert.service;
 import com.example.fromzerotoexpert.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -16,4 +17,8 @@ import java.security.NoSuchAlgorithmException;
 public interface UserService extends IService<User> {
 
     int userRegister(String mobile, String pwd, String verifyCode);
+
+    String userLogin(String mobile, String pwd, HttpServletRequest request);
+
+    int userLogout(String id);
 }
