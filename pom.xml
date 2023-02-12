@@ -55,6 +55,13 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!--UUID-->
+        <dependency>
+            <groupId>com.fasterxml.uuid</groupId>
+            <artifactId>java-uuid-generator</artifactId>
+            <version>3.1.4</version>
+        </dependency>
+
         <!--redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
