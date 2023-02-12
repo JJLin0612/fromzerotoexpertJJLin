@@ -33,4 +33,12 @@ public class MutilThreadScheduleTask {
         redisTemplate.opsForZSet().removeRangeByScore("user:online", 0, time);
     }
 
+    @Async
+    @Scheduled(cron = "59 59 23 * * ?")
+    public void cleanIpUvPvData() {
+        redisTemplate.opsForHyperLogLog().delete("website:ip");
+        redisTemplate.opsForHyperLogLog().delete("website:uv");
+        redisTemplate.delete("website:pv");
+    }
+
 }
