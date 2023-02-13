@@ -18,6 +18,8 @@ public interface ResultCode {
      *    c 验证码错误        10003
      *    c 用户已注册        10004
      *    d 用户被禁用        10005
+     *    e token 空或错误   10006
+     *    f token 过期       10007
      */
     public static Integer ERROR = 10000;
     public static Integer USER_UNREGISTERED_ERROR = 10001;
@@ -25,6 +27,15 @@ public interface ResultCode {
     public static Integer INCORRECT_VERIFY_CODE_ERROR = 10003;
     public static Integer USER_HAS_EXITS_ERROR = 10004;
     public static Integer USER_IS_DISABLED_ERROR = 10005;
+    public static Integer TOKEN_NULL_OR_ERROR = 10006;
+    public static Integer TOKEN_EXPIRE_ERROR = 10007;
+
+    /***
+     * 接口访问 11000
+     *   a 访问频繁           11001
+     */
+    public static Integer API_ACCESS_TOO_BUSY = 11001;
+
 
     /**
      * 静态变量

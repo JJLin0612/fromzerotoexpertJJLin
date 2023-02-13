@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,20 @@ public class WebaccesscountController {
     public Result getAccessCount(@RequestBody WebAccessCountQuery query) {
          List<Webaccesscount> accessData = service.getAccessCount(query);
          return Result.ok().data("accessData", accessData);
+    }
+
+    @ApiOperation("新增用户IP到白名单中")
+    @GetMapping("addWhiteList")
+    public Result addUserWhiteList(HttpServletRequest request) {
+        boolean res = service.addUserWhiteList(request);
+        return res ? Result.ok() : Result.error();
+    }
+
+    @ApiOperation("从白名单中删除此IP")
+    @DeleteMapping("deleteWhiteIP")
+    public Result deleteWhiteIP(HttpServletRequest request) {
+        boolean res = service.deleteUserWhiteList(request);
+        return res ? Result.ok() : Result.error();
     }
 
 }
