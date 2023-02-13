@@ -1,7 +1,6 @@
 package com.example.fromzerotoexpert.config;
 
 import com.example.fromzerotoexpert.config.Interceptor.GlobalInterceptor;
-import com.example.fromzerotoexpert.config.Interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,8 +15,6 @@ public class WebConfigurer implements WebMvcConfigurer {
 
     @Autowired
     private GlobalInterceptor globalInterceptor;
-    @Autowired
-    private LoginInterceptor loginInterceptor;
 
     /***
      * 用于注册拦截器
@@ -26,10 +23,13 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(globalInterceptor)
-                .addPathPatterns("/**");
-        //注册登录拦截器
-//        registry.addInterceptor(loginInterceptor)
-//                .addPathPatterns("/**").excludePathPatterns("/swagger-ui.html");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/VerifyCode/**")
+                .excludePathPatterns("/RSA-Encryption/**")
+                .excludePathPatterns("/RegisterAndLogin/**")
+                .excludePathPatterns("/swagger-ui.html/**")
+                .excludePathPatterns("/webjars/springfox-swagger-ui/**")
+                .excludePathPatterns("/swagger-resources/**");
     }
 
     /***

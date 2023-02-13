@@ -104,6 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String userLogin(String mobile, String pwd, HttpServletRequest request) {
         //解密
+        log.warn(mobile);
         mobile = decryptData(mobile);
         pwd = decryptData(pwd);
 

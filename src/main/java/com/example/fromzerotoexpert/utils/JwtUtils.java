@@ -60,7 +60,7 @@ public class JwtUtils {
     /**
      * 判断token是否存在与有效
      * @param request
-     * @return
+     * @return true-凭证没问题  false-无凭证或凭证有问题
      */
     public static boolean checkToken(HttpServletRequest request) {
         try {

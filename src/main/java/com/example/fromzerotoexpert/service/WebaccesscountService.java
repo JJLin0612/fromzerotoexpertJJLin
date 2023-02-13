@@ -4,6 +4,7 @@ import com.example.fromzerotoexpert.entity.Webaccesscount;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.fromzerotoexpert.entity.vo.WebAccessCountQuery;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +19,8 @@ import java.util.Map;
 public interface WebaccesscountService extends IService<Webaccesscount> {
 
     List<Webaccesscount> getAccessCount(WebAccessCountQuery query);
+
+    boolean addUserWhiteList(HttpServletRequest request);
+
+    boolean deleteUserWhiteList(HttpServletRequest request);
 }

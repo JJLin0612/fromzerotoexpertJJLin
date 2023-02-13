@@ -6,11 +6,13 @@ import com.example.fromzerotoexpert.entity.vo.WebAccessCountQuery;
 import com.example.fromzerotoexpert.mapper.WebaccesscountMapper;
 import com.example.fromzerotoexpert.service.WebaccesscountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.fromzerotoexpert.utils.IpUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,5 +59,35 @@ public class WebaccesscountServiceImpl extends ServiceImpl<WebaccesscountMapper,
         dataList.add(currData);
 
         return dataList;
+    }
+
+    /***
+     * 将IP添加到白名单
+     * @param request
+     * @return true-添加成功
+     */
+    @Override
+    public boolean addUserWhiteList(HttpServletRequest request) {
+        //请求IP
+        String ipAddr = IpUtil.getIpAddr(request);
+        //添加IP白名单
+        Long res = redisTemplate.opsForSet().add("website:whiteList", ipAddr);
+
+        return res == 0 ? false : true;
+    }
+
+    /***
+     * 将IP从白名单中移除
+     * @param request
+     * @return true-移除成功
+     */
+    @Override
+    public boolean deleteUserWhiteList(HttpServletRequest request) {
+        //请求IP
+        String ipAddr = IpUtil.getIpAddr(request);
+        //白名单中移除IP
+        Long res = redisTemplate.opsForSet().remove("website:whiteList", ipAddr);
+
+        return res == 0 ? false : true;
     }
 }
