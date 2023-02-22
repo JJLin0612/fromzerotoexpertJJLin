@@ -1,4 +1,4 @@
-package com.example.fromzerotoexpert.dto;
+package com.example.fromzerotoexpert.entity.dto;
 
 import lombok.Data;
 

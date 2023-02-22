@@ -1,8 +1,9 @@
 package com.example.fromzerotoexpert.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.fromzerotoexpert.dto.ResultCode;
+import com.example.fromzerotoexpert.entity.dto.ResultCode;
 import com.example.fromzerotoexpert.entity.User;
+import com.example.fromzerotoexpert.entity.vo.UserQuery;
 import com.example.fromzerotoexpert.exception.CustomException;
 import com.example.fromzerotoexpert.mapper.UserMapper;
 import com.example.fromzerotoexpert.service.UserService;
@@ -47,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 插入成功的用户的数量 0(插入失败)、1(插入成功)
      */
     @Override
-    public int userRegister(String mobile, String pwd, String verifyCode) {
+    public String userRegister(String mobile, String pwd, String verifyCode) {
         //解密手机号
         mobile = decryptData(mobile);
         //从Redis中获取验证码并验证
@@ -91,7 +92,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setAcc(newAccNumber);
         user.setMobile(mobile);
         user.setPwd(MD5.encrypt(pwd));
-        return baseMapper.insert(user);
+        int res = baseMapper.insert(user);
+        if (res == 0) throw new CustomException(ResultCode.ADD_RECORD_FAILED, "insert failed");
+        return newAccNumber;
     }
 
     /**
@@ -157,6 +160,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             res = 1;
         }
         return res;
+    }
+
+    /***
+     * 根据UserQuery查询对象查询User
+     * @param query 查询对象
+     * @return User集合
+     */
+    @Override
+    public List<User> getUsersByQuery(UserQuery query) {
+        //TODO 条件查询
+        return null;
     }
 
     /***

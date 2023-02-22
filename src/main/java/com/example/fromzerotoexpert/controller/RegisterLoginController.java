@@ -1,6 +1,8 @@
 package com.example.fromzerotoexpert.controller;
 
-import com.example.fromzerotoexpert.dto.Result;
+import com.example.fromzerotoexpert.annotation.LogRecord;
+import com.example.fromzerotoexpert.entity.dto.OperateType;
+import com.example.fromzerotoexpert.entity.dto.Result;
 import com.example.fromzerotoexpert.service.UserService;
 import com.example.fromzerotoexpert.utils.RSAUtils;
 import com.sun.istack.internal.NotNull;
@@ -35,6 +37,7 @@ public class RegisterLoginController {
      */
     @ApiOperation("用户注册")
     @PostMapping("Regist")
+    @LogRecord(operateType = OperateType.REGISTER, operateDesc = "用户注册")
     public Result doRegister(
             @RequestParam(value = "mobile", defaultValue = "") @NotNull @ApiParam("手机号码")
                     String mobile,
@@ -43,8 +46,8 @@ public class RegisterLoginController {
             @RequestParam(value = "verifyCode", defaultValue = "") @NotNull @ApiParam("手机验证码")
                     String verifyCode
     ) {
-        int res = userService.userRegister(mobile, pwd, verifyCode);
-        return res == 1 ? Result.ok() : Result.error();
+        String acc = userService.userRegister(mobile, pwd, verifyCode);
+        return Result.ok().data("acc", acc);
     }
 
     /***
@@ -55,6 +58,7 @@ public class RegisterLoginController {
      */
     @ApiOperation("用户登录")
     @PostMapping("Login")
+    @LogRecord(operateType = OperateType.LOGIN, operateDesc = "用户登录")
     public Result doLogin(
             @RequestParam(value = "mobile", defaultValue = "") @NotNull @ApiParam("手机号码")
                     String mobile,
@@ -73,6 +77,7 @@ public class RegisterLoginController {
      */
     @ApiOperation("用户退出登录")
     @GetMapping("logout")
+    @LogRecord(operateType = OperateType.LOGOUT, operateDesc = "用户退出登录")
     public Result doLogout(
             @RequestParam(value = "id", defaultValue = "")
             @NotNull

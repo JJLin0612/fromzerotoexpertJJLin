@@ -1,8 +1,8 @@
 package com.example.fromzerotoexpert.config.Interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.fromzerotoexpert.dto.Result;
-import com.example.fromzerotoexpert.dto.ResultCode;
+import com.example.fromzerotoexpert.entity.dto.Result;
+import com.example.fromzerotoexpert.entity.dto.ResultCode;
 import com.example.fromzerotoexpert.utils.CookieUtil;
 import com.example.fromzerotoexpert.utils.IpUtil;
 import com.example.fromzerotoexpert.utils.JwtUtils;
@@ -49,11 +49,11 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //访问量统计
-        countAccess(request, response);
+//        countAccess(request, response);
         //前端的token登录凭证检查
 //        if (loginTokenCheck(request, response)) return false;
         //接口访问限制
-        if (accessLimit(request, response)) return false;
+//        if (accessLimit(request, response)) return false;
 
         return true;
     }

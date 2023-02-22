@@ -1,12 +1,12 @@
 package com.example.fromzerotoexpert.tasks;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -15,10 +15,9 @@ import org.springframework.stereotype.Component;
  */
 @EnableScheduling
 @Component
-@EnableAsync
 public class MutilThreadScheduleTask {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     /***
@@ -33,6 +32,9 @@ public class MutilThreadScheduleTask {
         redisTemplate.opsForZSet().removeRangeByScore("user:online", 0, time);
     }
 
+    /**
+     * 每天23:59:59清除网站IP UV PV
+     */
     @Async
     @Scheduled(cron = "59 59 23 * * ?")
     public void cleanIpUvPvData() {

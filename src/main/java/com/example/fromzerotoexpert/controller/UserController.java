@@ -2,19 +2,20 @@ package com.example.fromzerotoexpert.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.fromzerotoexpert.annotation.LogRecord;
 import com.example.fromzerotoexpert.entity.User;
+import com.example.fromzerotoexpert.entity.dto.OperateType;
+import com.example.fromzerotoexpert.entity.dto.Result;
+import com.example.fromzerotoexpert.entity.vo.UserQuery;
 import com.example.fromzerotoexpert.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author RabbitFaFa
@@ -27,17 +28,21 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    /**
-     * 根据phoneNumbers查询user
-     * @param mobile 电话号码
-     * @return 查询到的user
-     */
-    @GetMapping("/{mobile}")
-    public String userList(@PathVariable("mobile") String mobile) {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("mobile", mobile);
-        userService.getOne(wrapper);
-        return "";
+
+    @GetMapping
+    @LogRecord(operateType = OperateType.READ, operateDesc = "多条件组合查询用户信息")
+    public Result userList(@RequestBody UserQuery query) {
+        List<User> list = userService.getUsersByQuery(query);
+        return Result.ok().data("userList", list);
+    }
+
+    @PostMapping
+    @LogRecord(operateType = OperateType.MODIFY,
+            operateDesc = "更新用户信息",
+            contentId = "{{#user.id}}")
+    public Result modifyUser(@RequestBody User user) {
+        userService.updateById(user);
+        return Result.ok();
     }
 
 }

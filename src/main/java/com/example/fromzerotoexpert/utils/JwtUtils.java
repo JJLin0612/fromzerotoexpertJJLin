@@ -21,11 +21,12 @@ public class JwtUtils {
 
     /**
      * 生成token字符串
+     *
      * @param id
      * @param nickname
      * @return
      */
-    public static String getJwtToken(String id, String nickname){
+    public static String getJwtToken(String id, String nickname) {
 
         String JwtToken = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
@@ -43,11 +44,12 @@ public class JwtUtils {
 
     /**
      * 判断token是否存在与有效
+     *
      * @param jwtToken
      * @return
      */
     public static boolean checkToken(String jwtToken) {
-        if(StringUtils.isEmpty(jwtToken)) return false;
+        if (StringUtils.isEmpty(jwtToken)) return false;
         try {
             Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         } catch (Exception e) {
@@ -59,13 +61,14 @@ public class JwtUtils {
 
     /**
      * 判断token是否存在与有效
+     *
      * @param request
      * @return true-凭证没问题  false-无凭证或凭证有问题
      */
     public static boolean checkToken(HttpServletRequest request) {
         try {
             String jwtToken = request.getHeader("token");
-            if(StringUtils.isEmpty(jwtToken)) return false;
+            if (StringUtils.isEmpty(jwtToken)) return false;
             Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,14 +79,26 @@ public class JwtUtils {
 
     /**
      * 根据token获取会员id
+     *
      * @param request
      * @return
      */
     public static String getDataIdByJwtToken(HttpServletRequest request) {
         String jwtToken = request.getHeader("token");
-        if(StringUtils.isEmpty(jwtToken)) return "";
-        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
+        if (StringUtils.isEmpty(jwtToken)) return "";
+        return getDataIdByTokenStr(jwtToken);
+    }
+
+    /***
+     *根据token字符串获取数据id
+     *
+     * @param token
+     * @return
+     */
+    public static String getDataIdByTokenStr(String token) {
+        if (StringUtils.isEmpty(token)) return "";
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
-        return (String)claims.get("id");
+        return (String) claims.get("id");
     }
 }
