@@ -17,7 +17,7 @@ spring:
     password: "0612"
   # Redis 连接参数配置
   redis:
-    host: 192.168.217.146
+    host: 192.168.217.149
     port: 6379
     jedis:
       pool:

@@ -1,6 +1,8 @@
 package com.example.fromzerotoexpert.controller;
 
-import com.example.fromzerotoexpert.dto.Result;
+import com.example.fromzerotoexpert.annotation.LogRecord;
+import com.example.fromzerotoexpert.entity.dto.OperateType;
+import com.example.fromzerotoexpert.entity.dto.Result;
 import com.example.fromzerotoexpert.utils.RandomNum;
 import com.example.fromzerotoexpert.utils.SendMsm;
 import com.sun.istack.NotNull;
@@ -35,6 +37,7 @@ public class VerifyCodeController {
      */
     @ApiOperation("根据手机号码生成并发送验证码")
     @GetMapping
+    @LogRecord(operateType = OperateType.OTHER, operateDesc = "发送验证码")
     public Result generateCode(
             @RequestParam(value = "mobile", defaultValue = "")
             @NotNull

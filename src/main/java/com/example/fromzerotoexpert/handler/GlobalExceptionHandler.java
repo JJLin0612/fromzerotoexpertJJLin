@@ -1,6 +1,6 @@
 package com.example.fromzerotoexpert.handler;
 
-import com.example.fromzerotoexpert.dto.Result;
+import com.example.fromzerotoexpert.entity.dto.Result;
 import com.example.fromzerotoexpert.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;

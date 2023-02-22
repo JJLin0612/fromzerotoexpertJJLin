@@ -1,6 +1,8 @@
 package com.example.fromzerotoexpert.controller;
 
-import com.example.fromzerotoexpert.dto.Result;
+import com.example.fromzerotoexpert.annotation.LogRecord;
+import com.example.fromzerotoexpert.entity.dto.OperateType;
+import com.example.fromzerotoexpert.entity.dto.Result;
 import com.example.fromzerotoexpert.service.DataStatisticsService;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiOperation;
@@ -38,8 +40,13 @@ public class DataStatisticsController {
         return Result.ok();
     }
 
+    /***
+     * 获取当前在线人数接口
+     * @return 当前在线人数
+     */
     @ApiOperation("获取当前在线人数API")
     @GetMapping("showOnlineUsers")
+    @LogRecord(operateType = OperateType.READ, operateDesc = "获取Website当前在线人数")
     public Result showOnlineUsers() {
         long count = service.onlineUsers();
         return Result.ok().data("onlineUsers", count);
