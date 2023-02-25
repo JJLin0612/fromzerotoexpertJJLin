@@ -14,6 +14,7 @@ import com.example.fromzerotoexpert.utils.MD5;
 import com.example.fromzerotoexpert.utils.RSAUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -76,7 +77,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
 
             else {
-                //改手机号用户存在但已为删除状态 将记录删除
+                //该手机号用户存在但已为删除状态 将记录删除
                 wrapper = new QueryWrapper<>();
                 wrapper.eq("mobile", mobile);
                 baseMapper.delete(wrapper);
@@ -87,11 +88,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Calendar calendar = Calendar.getInstance();
         String newAccNumber = "d" + calendar.get(Calendar.DAY_OF_YEAR) + "_" + Long.toHexString(System.currentTimeMillis());
 
-        //MD5加密密码 新增user
+        //BCrypt加密密码 新增user
         User user = new User();
         user.setAcc(newAccNumber);
         user.setMobile(mobile);
-        user.setPwd(MD5.encrypt(pwd));
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String pwdEncode = encoder.encode(pwd);
+        user.setPwd(pwdEncode);
         int res = baseMapper.insert(user);
         if (res == 0) throw new CustomException(ResultCode.ADD_RECORD_FAILED, "insert failed");
         return newAccNumber;
@@ -107,7 +110,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String userLogin(String mobile, String pwd, HttpServletRequest request) {
         //解密
-        log.warn(mobile);
         mobile = decryptData(mobile);
         pwd = decryptData(pwd);
 
@@ -122,9 +124,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = baseMapper.selectOne(wrapper);
 
         // 比较手机号 密码是否正确
-        wrapper.eq("pwd", MD5.encrypt(pwd));
-        Integer res = baseMapper.selectCount(wrapper);
-        if (res == 0)
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(pwd, user.getPwd()))//密码匹配
             throw new CustomException(ResultCode.INCORRECT_PHONE_OR_PWD_ERROR, "incorrect phone or pwd");
 
         //用户被禁用
@@ -133,18 +134,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         //获取用户id
         String id = user.getId();
-        //redis缓存(旧设备)中是否有 该 userId
-        String oldToken = redisTemplate.opsForValue().get(id);
-        //账号在新设备登录 旧设备下线
-        if (!StringUtils.isEmpty(oldToken)) redisTemplate.delete(id);
-        //当前请求的设备(新设备)的信息
-        String deviceInfo = ClientInfo.getDeviceInfo(request);
-        //生成token
-        String newtoken = JwtUtils.getJwtToken(id, deviceInfo);
-        //将token缓存
-        redisTemplate.opsForValue().set(id, newtoken, 24 * 7, TimeUnit.HOURS);
+        //返回的token
+        String token = JwtUtils.getTokenFromRequest(request);
 
-        return newtoken;
+        //TODO 请求中携有Token(用户第二次登录)
+        if (!StringUtils.isEmpty(token)) {
+            //更新过期时间
+            redisTemplate.expire(id, 24 * 7, TimeUnit.HOURS);
+        }else {//无token 第一次登录
+            //redis缓存(旧设备)中是否有 该 userId
+            String oldToken = redisTemplate.opsForValue().get(id);
+            //账号在新设备登录 旧设备下线
+            if (!StringUtils.isEmpty(oldToken)) redisTemplate.delete(id);
+            //当前请求的设备(新设备)的信息
+            String deviceInfo = ClientInfo.getDeviceInfo(request);
+            //生成token
+            token = JwtUtils.getJwtToken(id, deviceInfo);
+            //将token缓存
+            redisTemplate.opsForValue().set(id, token, 24 * 7, TimeUnit.HOURS);
+        }
+
+        return token;
     }
 
     /***

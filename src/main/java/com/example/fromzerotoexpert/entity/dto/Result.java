@@ -19,6 +19,9 @@ public class Result {
 
     public Result() {}
 
+    /***
+     * @return 返回操作成功的Result对象
+     */
     public static Result ok() {
         Result result = new Result();
         result.setIsSuccess(true);
@@ -27,6 +30,9 @@ public class Result {
         return result;
     }
 
+    /***
+     * @return 返回操作失败的Result对象
+     */
     public static Result error() {
         Result result = new Result();
         result.setIsSuccess(false);
@@ -45,11 +51,22 @@ public class Result {
         return this;
     }
 
+    /***
+     * 将Result对象中的默认map替换为新的data
+     * @param data 新的data
+     * @return Result对象实例
+     */
     public Result data(Map<String, Object> data) {
         this.setData(data);
         return this;
     }
 
+    /***
+     * 向结果对象中以 k-v 的方式加入数据
+     * @param key
+     * @param value
+     * @return
+     */
     public Result data(String key, Object value) {
         this.data.put(key, value);
         return this;

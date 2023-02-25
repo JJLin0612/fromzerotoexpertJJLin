@@ -68,13 +68,33 @@ public class JwtUtils {
     public static boolean checkToken(HttpServletRequest request) {
         try {
             String jwtToken = request.getHeader("token");
-            if (StringUtils.isEmpty(jwtToken)) return false;
+            if (!isExistToken(request)) return false;
             Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    /***
+     * 查看请求中是否有token凭证
+     * @param request
+     * @return
+     */
+    public static boolean isExistToken(HttpServletRequest request) {
+        String jwtToken = request.getHeader("token");
+        if (StringUtils.isEmpty(jwtToken)) return false;
+        return true;
+    }
+
+    /***
+     * 获取请求中的token
+     * @param request
+     * @return
+     */
+    public static String getTokenFromRequest(HttpServletRequest request) {
+        return request.getHeader("token");
     }
 
     /**
