@@ -12,14 +12,15 @@ public interface ResultCode {
 
     /***
      * 异常码 10000
-     * 1、登录登出注册 10xxx
+     * 1、登录登出注册访问 10xxx
      *    a 用户未注册        10001
      *    b 手机号或密码错误   10002
      *    c 验证码错误        10003
      *    c 用户已注册        10004
      *    d 用户被禁用        10005
      *    e token 空或错误   10006
-     *    f token 过期       10007
+     *    f token 过有效期       10007
+     *    g 此设备被挤下线     10008
      */
     Integer ERROR = 10000;
     Integer USER_UNREGISTERED_ERROR = 10001;
@@ -29,6 +30,7 @@ public interface ResultCode {
     Integer USER_IS_DISABLED_ERROR = 10005;
     Integer TOKEN_NULL_OR_ERROR = 10006;
     Integer TOKEN_EXPIRE_ERROR = 10007;
+    Integer FORCE_OFFLINE_ERROR = 10008;
 
     /***
      * 接口访问 11000

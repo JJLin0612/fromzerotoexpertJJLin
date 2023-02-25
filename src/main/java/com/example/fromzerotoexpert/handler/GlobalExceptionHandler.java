@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    /***
+     * 处理全局出现的非自定义异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result exceptionAppear(Exception e) {
@@ -24,6 +29,11 @@ public class GlobalExceptionHandler {
         return Result.error().setMessage(e.getMessage());
     }
 
+    /***
+     * 处理自定义异常
+     * @param customException
+     * @return
+     */
     @ExceptionHandler(CustomException.class)
     @ResponseBody
     public Result customExceptionHandle(CustomException customException) {

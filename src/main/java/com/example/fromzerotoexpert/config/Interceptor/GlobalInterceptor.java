@@ -78,10 +78,17 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //从token中获取userId
         String userId = JwtUtils.getDataIdByJwtToken(request);
         //根据userId在redis中查询
-        String deviceInfoFromCache = redisTemplate.opsForValue().get(userId);
+        String tokenInRedis = redisTemplate.opsForValue().get(userId);
         //缓存中token过期
-        if (!StringUtils.isEmpty(deviceInfoFromCache)) {
+        if (StringUtils.isEmpty(tokenInRedis)) {
             result = Result.error().setCode(ResultCode.TOKEN_EXPIRE_ERROR).setMessage("token expired");
+            response.getWriter().write(JSONObject.toJSONString(result));
+            return true;
+        }
+        //缓存中存在userid相同记录但token不同 新设备登录 旧设备token失效
+        String token = JwtUtils.getTokenFromRequest(request);//本次请求的token
+        if (!token.equals(tokenInRedis)) {
+            result = Result.error().setCode(ResultCode.FORCE_OFFLINE_ERROR).setMessage("your device is forced offline");
             response.getWriter().write(JSONObject.toJSONString(result));
             return true;
         }

@@ -21,7 +21,7 @@ public class RSATest {
     @Test
     public void testRsa() throws Exception {
         int modules = 512;
-        String pwd = "@JJLin06120102";
+        String pwd = "1234";
         new RSAUtils();
         List<String> rsaKeyList = RSAUtils.getKeyStrList();
         //获取公钥 模拟传输公钥给前端

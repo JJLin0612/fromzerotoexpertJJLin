@@ -16,7 +16,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.setFieldValByName("gmtCreate", new Date(), metaObject)
                 .setFieldValByName("gmtModified", new Date(), metaObject)
-                .setFieldValByName("createTime", new Date(), metaObject);
+                .setFieldValByName("createTime", new Date(), metaObject)
+                .setFieldValByName("gmtCreate", new Date(), metaObject);
     }
 
     @Override

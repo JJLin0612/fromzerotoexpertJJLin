@@ -1,7 +1,10 @@
 package com.example.fromzerotoexpert.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -38,6 +41,7 @@ public class Webaccesscount implements Serializable {
     @ApiModelProperty(value = "页面访问量")
     private Integer pv;
 
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "记录保存时间")
     private Date gmtCreate;
 
