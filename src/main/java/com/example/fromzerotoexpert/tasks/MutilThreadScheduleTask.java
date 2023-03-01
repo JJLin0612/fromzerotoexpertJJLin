@@ -57,7 +57,7 @@ public class MutilThreadScheduleTask {
      * 每个月清除一个月前的IP UV PV数据
      */
     @Async
-    @Scheduled(cron = "* * * * */1 ?")
+    @Scheduled(cron = "* * * */1 * ?")
     public void clearOneMonthBeforeData() {
         //获取上个月此时的日期时间
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

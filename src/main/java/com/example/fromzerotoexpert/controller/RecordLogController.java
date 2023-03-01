@@ -42,17 +42,5 @@ public class RecordLogController {
         return Result.ok().data("logListPage", logListPage).data("total", total);
     }
 
-//    @GetMapping("addLog")
-//    public Result addLog() {
-//        RecordLog log = new RecordLog();
-//        log.setStatus("success");
-//        log.setCostMs("16889");
-//        log.setOpIp("192.168.1.146");
-//        log.setOpDesc("测试添加日志功能");
-//        log.setOpAcc("JJLin");
-//        log.setOpType(OperateType.ADD);
-//        logService.save(log);
-//        return Result.ok();
-//    }
 }
 
